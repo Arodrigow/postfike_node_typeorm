@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import { createUserController } from "../useCases/user/createUser";
 import { listAllUsersController } from "../useCases/user/listAllUsers";
+import { updateUserController } from "../useCases/user/updateUser"
 
 const usersRoutes = Router();
 
@@ -14,7 +15,7 @@ usersRoutes.get("/", (request, response) => {
 });
 
 usersRoutes.patch("/:user_id", (request, response) => {
-    //TODO: Updates a user
+    updateUserController.handle(request, response);
 });
 
 usersRoutes.delete("/:user_id", (request, response) => {
