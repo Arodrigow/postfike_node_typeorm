@@ -19,7 +19,6 @@ class UpdateUserUseCase {
             throw new Error("ID not found")
         }
 
-        console.log(userToBeUpdated);
         const user = userRepository.merge(userToBeUpdated, { name: name, password: password, email: email, phone: phone });
 
         await userRepository.save(user);
