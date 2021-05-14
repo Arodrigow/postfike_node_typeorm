@@ -3,7 +3,8 @@ import { Router } from "express";
 import { createUserController } from "../useCases/user/createUser";
 import { deleteUserController } from "../useCases/user/deleteUser";
 import { listAllUsersController } from "../useCases/user/listAllUsers";
-import { updateUserController } from "../useCases/user/updateUser"
+import { updateUserController } from "../useCases/user/updateUser";
+import { findByNameController } from "../useCases/user/findByName";
 
 const usersRoutes = Router();
 
@@ -24,6 +25,6 @@ usersRoutes.delete("/:user_id", (request, response) => {
 });
 
 usersRoutes.get("/find", (request, response) => {
-    //TODO: Finda user by name
+    findByNameController.handle(request, response);
 })
 export { usersRoutes };
