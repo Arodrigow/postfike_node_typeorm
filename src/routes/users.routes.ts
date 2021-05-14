@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { createUserController } from "../useCases/user/createUser";
+import { deleteUserController } from "../useCases/user/deleteUser";
 import { listAllUsersController } from "../useCases/user/listAllUsers";
 import { updateUserController } from "../useCases/user/updateUser"
 
@@ -19,7 +20,7 @@ usersRoutes.patch("/:user_id", (request, response) => {
 });
 
 usersRoutes.delete("/:user_id", (request, response) => {
-    //TODO: Deletes a user
+    deleteUserController.handle(request, response);
 });
 
 usersRoutes.get("/find", (request, response) => {
