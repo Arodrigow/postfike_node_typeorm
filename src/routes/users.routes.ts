@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { createUserController } from "../useCases/user/createUser";
+import { listAllUsersController } from "../useCases/user/listAllUsers";
 
 const usersRoutes = Router();
 
@@ -9,7 +10,7 @@ usersRoutes.post("/", (request, response) => {
 });
 
 usersRoutes.get("/", (request, response) => {
-    //TODO: list all users
+    listAllUsersController.handle(request, response);
 });
 
 usersRoutes.patch("/:user_id", (request, response) => {
