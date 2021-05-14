@@ -19,19 +19,25 @@ class Post {
     @Column({ type: "varchar", length: 200 })
     description!: string;
 
-    @Column({ type: "datetime" })
+    @Column({ type: "datetime", nullable: true })
     validUntil!: Date;
 
-    @Column({ type: "text" })
+    @Column({ type: "text", nullable: true })
     details!: string;
 
-    @Column({ type: "varchar" })
+    @Column({ type: "varchar", nullable: true })
     photos!: string;
 
-    @CreateDateColumn({ type: "datetime", default: "now()" })
+    @Column({ type: "integer", nullable: true })
+    likes!: number;
+
+    @Column({ type: "integer", nullable: true })
+    visualizations!: number;
+
+    @CreateDateColumn({ type: "datetime" })
     created_at!: Date;
 
-    @UpdateDateColumn({ type: "datetime", default: "now()" })
+    @UpdateDateColumn({ type: "datetime" })
     updated_at!: Date;
 
     @ManyToOne(() => User, user => user.posts)
@@ -41,6 +47,7 @@ class Post {
         if (!this.id) {
             this.id = uuidV4();
         }
+
     }
 }
 
