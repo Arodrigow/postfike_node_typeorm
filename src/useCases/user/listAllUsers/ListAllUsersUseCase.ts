@@ -6,7 +6,7 @@ class ListAllUsersUseCase {
 
     async execute(): Promise<User[]> {
         const userRepository = getCustomRepository(UserRepository);
-        const users = await userRepository.find();
+        const users = await userRepository.find({ relations: ["posts"] });
 
         return users;
     }

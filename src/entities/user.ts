@@ -1,6 +1,7 @@
-import { PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, Entity } from "typeorm"
+import { PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, Entity, OneToMany } from "typeorm"
 
 import { v4 as uuidV4 } from "uuid";
+import { Post } from "./post";
 
 @Entity("users")
 class User {
@@ -25,6 +26,9 @@ class User {
 
     @UpdateDateColumn()
     updated_at!: Date;
+
+    @OneToMany(() => Post, post => post.user)
+    posts!: Post[];
 
     constructor() {
         if (!this.id) {
