@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { listAllPostsController } from "../useCases/posts/listAllPosts";
 import { createNewPostController } from "../useCases/posts/createNewPost"
+import { findPostByUserController } from "../useCases/posts/findPostByUser";
 
 const postsRoutes = Router();
 
@@ -13,7 +14,7 @@ postsRoutes.post("/:user_id/", (request, response) => {
 });
 
 postsRoutes.get("/:user_id", (request, response) => {
-    //TODO: Get all posts of a user
+    findPostByUserController.handle(request, response);
 });
 
 postsRoutes.get("/:user_id/:post_id", (request, response) => {
