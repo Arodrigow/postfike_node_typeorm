@@ -7,7 +7,7 @@ import { findPostController } from "../useCases/posts/findPost";
 const postsRoutes = Router();
 
 // baseURL/posts
-postsRoutes.get("/", (request, response) => {
+postsRoutes.get("/find/", (request, response) => {
     listAllPostsController.handle(request, response);
 });
 postsRoutes.post("/:user_id/", (request, response) => {
@@ -18,7 +18,7 @@ postsRoutes.get("/:user_id", (request, response) => {
     findPostByUserController.handle(request, response);
 });
 
-postsRoutes.get("/:post_id", (request, response) => {
+postsRoutes.get("/find/:post_id", (request, response) => {
     findPostController.handle(request, response);
 });
 
