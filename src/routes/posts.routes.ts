@@ -4,6 +4,7 @@ import { createNewPostController } from "../useCases/posts/createNewPost"
 import { findPostByUserController } from "../useCases/posts/findPostByUser";
 import { findPostController } from "../useCases/posts/findPost";
 import { updatePostController } from "../useCases/posts/updatePost";
+import { deletePostController } from "../useCases/posts/deletePost";
 
 const postsRoutes = Router();
 
@@ -28,7 +29,7 @@ postsRoutes.patch("/:user_id/:post_id", (request, response) => {
 });
 
 postsRoutes.delete("/:user_id/:post_id", (request, response) => {
-    //TODO: Let an user delete a post
+    deletePostController.handle(request, response);
 });
 
 export { postsRoutes };
