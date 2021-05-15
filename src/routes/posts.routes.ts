@@ -3,6 +3,7 @@ import { listAllPostsController } from "../useCases/posts/listAllPosts";
 import { createNewPostController } from "../useCases/posts/createNewPost"
 import { findPostByUserController } from "../useCases/posts/findPostByUser";
 import { findPostController } from "../useCases/posts/findPost";
+import { updatePostController } from "../useCases/posts/updatePost";
 
 const postsRoutes = Router();
 
@@ -23,7 +24,7 @@ postsRoutes.get("/find/:post_id", (request, response) => {
 });
 
 postsRoutes.patch("/:user_id/:post_id", (request, response) => {
-    //TODO: Let an user update posts
+    updatePostController.handle(request, response);
 });
 
 postsRoutes.delete("/:user_id/:post_id", (request, response) => {
