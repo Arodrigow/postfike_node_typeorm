@@ -26,9 +26,15 @@ class PostRepository implements IPostRepository {
         return this.postRepository.findOne(post_id, { relations: ["user"] })
     }
 
+    async findByContent(content: string): Promise<Post[]> {
+        const posts = await this.postRepository.query(
+            'SELECT * FROM posts WHERE (title LIKE "%' + content + '%") OR (description LIKE "%' + content + '%") OR (details LIKE "%' + content + '%")');
+        return posts;
+    }
+
     async updatePost(post: Post, { title, category, description, validUntil, details, photos }: IRequestDTO): Promise<Post> {
         const postUpdated = this.postRepository.merge(post, { title, category, description, validUntil, details, photos });
-        return await this.postRepository.save(postUpdated);
+        return await this.save(postUpdated);
 
     }
 

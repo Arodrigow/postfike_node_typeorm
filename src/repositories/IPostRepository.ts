@@ -16,6 +16,7 @@ interface IPostRepository {
     }: IRequestDTO): Promise<Post>;
     listAllPosts(): Promise<Post[]>;
     findPost(post_id: string): Promise<Post | undefined>;
+    findByContent(content: string): Promise<Post[]>;
     updatePost(post: Post, {
         title, category, description, validUntil, details, photos
     }: IRequestDTO): Promise<Post>;

@@ -1,5 +1,4 @@
 import { inject, injectable } from "tsyringe";
-import { getCustomRepository } from "typeorm"
 import { User } from "../../../entities/user";
 import { UserRepository } from "../../../repositories/implementations/UserRepository"
 

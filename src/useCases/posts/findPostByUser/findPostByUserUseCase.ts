@@ -1,6 +1,5 @@
 import { inject, injectable } from "tsyringe";
 import { Post } from "../../../entities/post";
-import { User } from "../../../entities/user";
 import { UserRepository } from "../../../repositories/implementations/UserRepository";
 
 @injectable()
