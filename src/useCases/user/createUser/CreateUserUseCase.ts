@@ -1,4 +1,5 @@
 import { inject, injectable } from "tsyringe";
+import { hash } from "bcrypt"
 import { Post } from "../../../entities/post";
 import { User } from "../../../entities/user";
 import { UserRepository } from "../../../repositories/implementations/UserRepository";
@@ -18,7 +19,9 @@ class CreateUserUseCase {
         private userRepository: UserRepository) { }
 
     async execute({ name, password, email, phone, posts }: IRequest): Promise<User> {
-        const user = this.userRepository.createUser({ name, password, email, phone, posts });
+        const passwordHash = await hash(password, 8);
+
+        const user = this.userRepository.createUser({ name, password: passwordHash, email, phone, posts });
 
         return user;
     }
