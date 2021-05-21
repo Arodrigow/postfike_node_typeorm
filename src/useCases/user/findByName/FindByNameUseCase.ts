@@ -1,15 +1,15 @@
+import { inject, injectable } from "tsyringe";
 import { getCustomRepository } from "typeorm"
 import { User } from "../../../entities/user";
-import { UserRepository } from "../../../repositories/UserRepository"
+import { UserRepository } from "../../../repositories/implementations/UserRepository"
 
-
+@injectable()
 class FindByNameUseCase {
-    async execute(user_name: string): Promise<User[]> {
-        const userRepository = getCustomRepository(UserRepository);
+    constructor(@inject("UserRepository") private userRepository: UserRepository) { }
 
-        const userFound = await userRepository.query(
-            'SELECT * FROM users WHERE name LIKE "%' + user_name + '%"'
-        );
+    async execute(user_name: string): Promise<User[]> {
+
+        const userFound = await this.userRepository.findByUserName(user_name);
         return userFound;
     }
 }

@@ -1,30 +1,25 @@
 import { Router } from "express";
 
-import { createUserController } from "../useCases/user/createUser";
-import { deleteUserController } from "../useCases/user/deleteUser";
-import { listAllUsersController } from "../useCases/user/listAllUsers";
-import { updateUserController } from "../useCases/user/updateUser";
-import { findByNameController } from "../useCases/user/findByName";
+import { CreateUserController } from "../useCases/user/createUser/CreateUserController";
+import { DeleteUserController } from "../useCases/user/deleteUser/DeleteUserController";
+import { ListAllUsersController } from "../useCases/user/listAllUsers/ListAllUsersController";
+import { FindByNameController } from "../useCases/user/findByName/FindByNameController";
+import { UpdateUserController } from "../useCases/user/updateUser/UpdateUserController";
 
 const usersRoutes = Router();
+const createUserController = new CreateUserController();
+const listAllUsersController = new ListAllUsersController();
+const findByNameController = new FindByNameController();
+const updateUserController = new UpdateUserController();
+const deleteUserController = new DeleteUserController();
 
-usersRoutes.post("/", (request, response) => {
-    createUserController.handle(request, response);
-});
+usersRoutes.post("/", createUserController.handle);
 
-usersRoutes.get("/", (request, response) => {
-    listAllUsersController.handle(request, response);
-});
+usersRoutes.get("/", listAllUsersController.handle);
 
-usersRoutes.patch("/:user_id", (request, response) => {
-    updateUserController.handle(request, response);
-});
+usersRoutes.patch("/:user_id", updateUserController.handle);
 
-usersRoutes.delete("/:user_id", (request, response) => {
-    deleteUserController.handle(request, response);
-});
+usersRoutes.delete("/:user_id", deleteUserController.handle);
 
-usersRoutes.get("/find", (request, response) => {
-    findByNameController.handle(request, response);
-})
+usersRoutes.get("/find", findByNameController.handle)
 export { usersRoutes };

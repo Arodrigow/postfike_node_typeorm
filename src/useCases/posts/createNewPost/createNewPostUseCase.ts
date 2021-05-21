@@ -1,7 +1,7 @@
 import { getCustomRepository } from "typeorm"
 import { Post } from "../../../entities/post";
-import { PostRepository } from "../../../repositories/PostRepository"
-import { UserRepository } from "../../../repositories/UserRepository"
+import { PostRepository } from "../../../repositories/implementations/PostRepository"
+import { UserRepository } from "../../../repositories/implementations/UserRepository"
 
 interface IRequest {
     title: string,
@@ -17,10 +17,9 @@ class CreateNewPostUseCase {
         title, category, description, validUntil, details, photos }: IRequest): Promise<Post> {
 
         const userRepository = getCustomRepository(UserRepository);
-        const user = await userRepository.findOne(user_id, { relations: ["posts"] });
-        if (!user) {
-            throw new Error("Can not finde user ID");
-        }
+
+        const user = await userRepository.findByUserId(user_id);
+
 
         const postRepository = getCustomRepository(PostRepository)
         const post = postRepository.create({
@@ -30,7 +29,7 @@ class CreateNewPostUseCase {
         await postRepository.save(post);
 
         user.posts.push(post);
-        await userRepository.save(user);
+        await userRepository.saveUser(user);
 
         return post;
     }

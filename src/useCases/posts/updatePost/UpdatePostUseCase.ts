@@ -1,6 +1,6 @@
 import { getCustomRepository } from "typeorm"
 import { Post } from "../../../entities/post";
-import { PostRepository } from "../../../repositories/PostRepository"
+import { PostRepository } from "../../../repositories/implementations/PostRepository"
 
 interface IRequest {
     title?: string,

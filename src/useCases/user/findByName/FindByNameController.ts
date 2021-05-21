@@ -1,20 +1,20 @@
 import { Request, Response } from "express";
+import { container } from "tsyringe";
 import { FindByNameUseCase } from "./FindByNameUseCase";
 
 
 class FindByNameController {
 
-    constructor(private findByNameUseCase: FindByNameUseCase) { }
-
     async handle(request: Request, response: Response): Promise<Response> {
         const { user_name } = request.query;
+        const findByNameUseCase = container.resolve(FindByNameUseCase);
 
         if (!user_name) {
-            const userFound = await this.findByNameUseCase.execute("");
+            const userFound = await findByNameUseCase.execute("");
             return response.status(200).json(userFound);
         }
 
-        const userFound = await this.findByNameUseCase.execute(user_name.toString());
+        const userFound = await findByNameUseCase.execute(user_name.toString());
         return response.status(200).json(userFound);
     }
 }

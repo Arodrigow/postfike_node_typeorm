@@ -1,5 +1,6 @@
 import express from "express";
-import "./database"
+import "./database";
+import "./shared/container";
 
 import { postsRoutes } from "./routes/posts.routes";
 import { usersRoutes } from "./routes/users.routes";

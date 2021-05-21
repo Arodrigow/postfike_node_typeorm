@@ -1,12 +1,13 @@
+import { inject, injectable } from "tsyringe";
 import { DeleteResult, getCustomRepository } from "typeorm"
-import { UserRepository } from "../../../repositories/UserRepository"
+import { UserRepository } from "../../../repositories/implementations/UserRepository"
 
-
+@injectable()
 class DeleteUserUseCase {
-    async execute(user_id: string): Promise<DeleteResult> {
-        const userRespository = getCustomRepository(UserRepository);
-        const userDeleted = await userRespository.delete(user_id);
-        return userDeleted;
+    constructor(@inject("UserRepository") private userRespository: UserRepository) { }
+    async execute(user_id: string): Promise<void> {
+        await this.userRespository.deleteUser(user_id);
+
     }
 }
 

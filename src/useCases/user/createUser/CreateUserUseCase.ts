@@ -1,7 +1,7 @@
-import { getCustomRepository } from "typeorm";
+import { inject, injectable } from "tsyringe";
 import { Post } from "../../../entities/post";
 import { User } from "../../../entities/user";
-import { UserRepository } from "../../../repositories/UserRepository";
+import { UserRepository } from "../../../repositories/implementations/UserRepository";
 
 interface IRequest {
     name: string;
@@ -11,12 +11,14 @@ interface IRequest {
     posts: Post[];
 }
 
+@injectable()
 class CreateUserUseCase {
-    async execute({ name, password, email, phone, posts }: IRequest): Promise<User> {
-        const userRepository = getCustomRepository(UserRepository);
+    constructor(
+        @inject("UserRepository")
+        private userRepository: UserRepository) { }
 
-        const user = userRepository.create({ name, password, email, phone, posts });
-        await userRepository.save(user);
+    async execute({ name, password, email, phone, posts }: IRequest): Promise<User> {
+        const user = this.userRepository.createUser({ name, password, email, phone, posts });
 
         return user;
     }
