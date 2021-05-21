@@ -1,12 +1,15 @@
-import { getCustomRepository } from "typeorm";
+import { inject, injectable } from "tsyringe";
 import { Post } from "../../../entities/post";
-import { UserRepository } from "../../../repositories/UserRepository";
+import { User } from "../../../entities/user";
+import { UserRepository } from "../../../repositories/implementations/UserRepository";
 
-
+@injectable()
 class FindPostByUserUseCase {
+    constructor(@inject("UserRepository") private userRepository: UserRepository) { }
+
     async execute(user_id: string): Promise<Post[]> {
-        const userRepository = getCustomRepository(UserRepository);
-        const user = await userRepository.findOne(user_id, { relations: ["posts"] });
+
+        const user = await this.userRepository.findByUserId(user_id);
 
         if (!user) {
             throw new Error("Can not find user");

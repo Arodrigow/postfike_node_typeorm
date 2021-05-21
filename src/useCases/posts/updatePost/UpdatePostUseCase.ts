@@ -1,3 +1,4 @@
+import { inject, injectable } from "tsyringe";
 import { getCustomRepository } from "typeorm"
 import { Post } from "../../../entities/post";
 import { PostRepository } from "../../../repositories/implementations/PostRepository"
@@ -11,12 +12,15 @@ interface IRequest {
     photos?: string,
 }
 
+@injectable()
 class UpdatePostUseCase {
+    constructor(@inject("PostRepository") private postRepository: PostRepository) { }
+
     async execute(user_id: string, post_id: string, {
         title, category, description, validUntil, details, photos
     }: IRequest): Promise<Post> {
-        const postRepository = getCustomRepository(PostRepository);
-        const postToBeUpdated = await postRepository.findOne(post_id, { relations: ["user"] });
+
+        const postToBeUpdated = await this.postRepository.findPost(post_id);
 
         if (!postToBeUpdated) {
             throw new Error("Can not find specified post!");
@@ -26,12 +30,11 @@ class UpdatePostUseCase {
             throw new Error("Only the owner can change a post!");
         }
 
-        const post = postRepository.merge(postToBeUpdated, {
+        const post = this.postRepository.updatePost(postToBeUpdated, {
             title: title, category: category, description: description,
             validUntil: validUntil, details: details, photos: photos
         });
 
-        await postRepository.save(post);
         return post;
     }
 }

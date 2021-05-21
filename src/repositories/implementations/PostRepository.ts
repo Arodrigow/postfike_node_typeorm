@@ -18,8 +18,22 @@ class PostRepository implements IPostRepository {
         return await this.save(post);
     }
 
-    listAllPosts(): Promise<Post[]> {
-        return this.postRepository.find({ relations: ["user"] });
+    async listAllPosts(): Promise<Post[]> {
+        return await this.postRepository.find({ relations: ["user"] });
+    }
+
+    async findPost(post_id: string): Promise<Post | undefined> {
+        return this.postRepository.findOne(post_id, { relations: ["user"] })
+    }
+
+    async updatePost(post: Post, { title, category, description, validUntil, details, photos }: IRequestDTO): Promise<Post> {
+        const postUpdated = this.postRepository.merge(post, { title, category, description, validUntil, details, photos });
+        return await this.postRepository.save(postUpdated);
+
+    }
+
+    async delete(post_id: string): Promise<void> {
+        await this.postRepository.delete(post_id);
     }
 
     async save(post: Post): Promise<Post> {
