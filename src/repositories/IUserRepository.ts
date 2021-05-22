@@ -14,6 +14,7 @@ interface IUserRepository {
     createUser({ name, password, email, phone, posts }: IRequestDTO): Promise<User>;
     findByUserId(user_id: string): Promise<User>;
     findByUserName(param: string): Promise<User[]>;
+    findByEmail(email: string): Promise<User | undefined>;
     listAll(): Promise<User[]>;
     updateUser(user: User, { name, password, email, phone }: IRequestDTO): Promise<User>;
     deleteUser(user_id: string): Promise<void>;

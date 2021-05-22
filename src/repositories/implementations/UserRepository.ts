@@ -1,4 +1,4 @@
-import { Repository, EntityRepository, getRepository, DeleteResult } from "typeorm";
+import { Repository, EntityRepository, getRepository } from "typeorm";
 import { User } from "../../entities/user";
 import { IRequestDTO, IUserRepository } from "../IUserRepository"
 
@@ -30,6 +30,10 @@ class UserRepository implements IUserRepository {
             'SELECT * FROM users WHERE name LIKE "%' + param + '%"'
         );
         return userFound;
+    }
+
+    async findByEmail(email: string): Promise<User | undefined> {
+        return await this.userRepository.findOne({ email });
     }
 
     async listAll(): Promise<User[]> {
