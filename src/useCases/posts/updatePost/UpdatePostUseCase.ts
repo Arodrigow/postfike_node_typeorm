@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { getCustomRepository } from "typeorm"
 import { Post } from "../../../entities/post";
+import { AppError } from "../../../errors/AppErrors";
 import { PostRepository } from "../../../repositories/implementations/PostRepository"
 
 interface IRequest {
@@ -23,11 +24,11 @@ class UpdatePostUseCase {
         const postToBeUpdated = await this.postRepository.findPost(post_id);
 
         if (!postToBeUpdated) {
-            throw new Error("Can not find specified post!");
+            throw new AppError("Can not find specified post!");
         }
 
         if (user_id !== postToBeUpdated.user.id) {
-            throw new Error("Only the owner can change a post!");
+            throw new AppError("Only the owner can change a post!");
         }
 
         const post = this.postRepository.updatePost(postToBeUpdated, {

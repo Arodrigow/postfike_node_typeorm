@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { getCustomRepository } from "typeorm";
 import { Post } from "../../../entities/post";
+import { AppError } from "../../../errors/AppErrors";
 import { PostRepository } from "../../../repositories/implementations/PostRepository";
 
 @injectable()
@@ -12,7 +13,7 @@ class FindPostUseCase {
         const post = await this.postRepository.findPost(post_id);
 
         if (!post) {
-            throw new Error("Can not find specified post");
+            throw new AppError("Can not find specified post");
         }
 
         return post;

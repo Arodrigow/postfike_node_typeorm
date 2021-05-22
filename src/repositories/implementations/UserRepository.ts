@@ -1,5 +1,6 @@
 import { Repository, EntityRepository, getRepository } from "typeorm";
 import { User } from "../../entities/user";
+import { AppError } from "../../errors/AppErrors";
 import { IRequestDTO, IUserRepository } from "../IUserRepository"
 
 @EntityRepository(User)
@@ -19,7 +20,7 @@ class UserRepository implements IUserRepository {
         const user = await this.userRepository.findOne(user_id, { relations: ["posts"] });
 
         if (!user) {
-            throw new Error("Can not finde user ID");
+            throw new AppError("Can not finde user ID");
         }
 
         return user;
