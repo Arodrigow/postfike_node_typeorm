@@ -7,6 +7,7 @@ import { FindPostByUserController } from "../useCases/posts/findPostByUser/findP
 import { UpdatePostController } from "../useCases/posts/updatePost/UpdatePostController";
 import { FindPostByContentController } from "../useCases/posts/findPostByContent/FindPostByContentController"
 import { FindPostController } from "../useCases/posts/findPost/FindPostController";
+import { ensureAuth } from "../middlewares/ensureAuth";
 
 
 
@@ -23,7 +24,7 @@ const deletePostController = new DeletePostController();
 // baseURL/posts
 postsRoutes.get("/find", listAllPostsController.handle);
 
-postsRoutes.post("/:user_id/", createNewPostController.handle);
+postsRoutes.post("/:user_id/", ensureAuth, createNewPostController.handle);
 
 postsRoutes.get("/:user_id/", findPostByUserController.handle);
 
@@ -31,8 +32,8 @@ postsRoutes.get("/search/q", findPostByContentController.handle);
 
 postsRoutes.get("/find/:post_id", findPostController.handle);
 
-postsRoutes.patch("/:user_id/:post_id", updatePostController.handle);
+postsRoutes.patch("/:user_id/:post_id", ensureAuth, updatePostController.handle);
 
-postsRoutes.delete("/:user_id/:post_id", deletePostController.handle);
+postsRoutes.delete("/:user_id/:post_id", ensureAuth, deletePostController.handle);
 
 export { postsRoutes };

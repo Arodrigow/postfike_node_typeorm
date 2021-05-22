@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { ensureAuth } from "../middlewares/ensureAuth";
 import { AuthUserController } from "../useCases/user/authUser/AuthUserController";
 
 const authRoutes = Router();
